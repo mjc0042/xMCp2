@@ -1,0 +1,9 @@
+.list-horizontal {
+  list-style: none; }
+  .list-horizontal li {
+    display: inline-block; }
+
+.btn-product-page i {
+  font-size: 25px;
+  font-style: bold; }
+
