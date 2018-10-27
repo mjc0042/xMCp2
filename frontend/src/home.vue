@@ -17,7 +17,7 @@
 		</ul>
 		<ul class="list-horizontal">
 		  <li>
-         <button class="btn btn-link btn-product-page" v-if="currentPage > 0" @click="getPreviousPage()"><i class="fa fa-angle-right" title="Previous"></i></button>
+         <button class="btn btn-link btn-product-page" v-if="currentPageNum > 0" @click="getPreviousPage()"><i class="fa fa-angle-right" title="Previous"></i></button>
       </li>
 		  <li v-for="page in pages" v-if="numberOfPages > 2">
 		    <a class="btn btn-primary" @click="getPage(page.link)"></a>

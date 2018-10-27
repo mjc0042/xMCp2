@@ -8,7 +8,7 @@ export class APIService {
 	/**
 	 * Constructor
 	 */
-    constructor(){ }
+    constructor() { }
 
     /**
      * API CALL: Get all products

@@ -59,6 +59,13 @@ export default {
   data () {
 	  return {
 	  }
+  },
+  
+  /**
+   * On load function
+   */
+  mounted: function() {
+	 console.log('navbar mounted.', authenticated); 
   }
 }
 
