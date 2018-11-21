@@ -6,19 +6,31 @@ import AuthService from '../auth/AuthService'
 
 import Home from '@/home';
 import User from '@/user';
+import Callback from '@/callback';
+import RegisterUser from '@/components/registeruser';
 
-Vue.use(Router)
+Vue.use(Router);
 
 const routes = [
   {
-    path: '/',
-    name: 'home-page',
-    component: Home
+	path: '/',
+	name: 'home-page',
+	component: Home
   },
   {
-	  path: '/user/:userId', 
-	  name: 'user-page',
-	  component: User 
+	path: '/user/:userId', 
+	name: 'user-page',
+	component: User 
+  },
+  {
+	path: '/register',
+	name: 'register-user-page',
+	component: RegisterUser
+  },
+  {
+	path: '/callback',
+	name: 'Callback',
+	component: Callback
   },
   {
     path: '/product-list',

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import Vue from 'vue';
 import router from './http/router'
+import store from './store'
 
 import App from '../App.vue';
 
@@ -8,5 +9,6 @@ import App from '../App.vue';
 new Vue({
   el: '#app',
   router : router,
+  store: store,
   render: h => h(App)
 });

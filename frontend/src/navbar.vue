@@ -15,9 +15,9 @@
 			  </div>
 			 </form>
 		  </li>
-		  <li class="nav-item dropdown" v-if="authenticated">
+		  <li class="nav-item dropdown" v-if="loggedIn">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				Hello {{ $options.user }}!
+				Hello {{ activeUser.name }}!
 		    </a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		       <div class="dropdown-item">
@@ -28,8 +28,8 @@
 			   <a class="dropdown-item" href="#">Logout</a>
 			</div>
 		  </li>
-		  <li class="nav-item" v-if="authenticated">
-		    <button class="btn btn-primary btn-margin" v-if="!authenticated" @click="login()">Log In</button>
+		  <li class="nav-item" v-if="!loggedIn">
+            <login-modal></login-modal>
 		  </li>
 		</ul>
 	  </div>
@@ -38,22 +38,33 @@
 
 <script>
 
+import USER_URL from './js/constants.js';
+import LoginModal from './components/login.vue';
+
 export default {
-  name: 'page-header', 
+  name: 'page-header',
   
-  user: 'Mike',
+  components: {
+	  'login-modal': LoginModal  
+  },
   
   props: {
 	  auth: { type: Object },
 	  authenticated: { type: Boolean }
   },
+  
+  computed: {
+	  loggedIn () {
+		  return this.$store.getters.isUserActive;
+	  },
+	  activeUser() {
+		  return this.$store.getters.getActiveUser;
+	  }
+  },
 
   methods: {
 	  goUserProfile: function () {
-		  this.$router.push('/user/' + this.$options.user );
-	  },
-	  login: function () {
-		  console.log("Attempted login");
+		  this.$router.push(USER_URL + this.$options.user );
 	  }
   },
   data () {
@@ -64,9 +75,7 @@ export default {
   /**
    * On load function
    */
-  mounted: function() {
-	 console.log('navbar mounted.', authenticated); 
-  }
+  mounted: function() { }
 }
 
 </script>

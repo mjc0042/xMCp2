@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import datetime
+import logging.config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-		'catalog',
+    'member',
+	'catalog',
     'rest_framework',
-		'corsheaders'
+    'rest_framework.authtoken',
+	'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -130,13 +134,84 @@ STATIC_URL = '/static/'
 
 # REST framework
 REST_FRAMEWORK = {
-		
-		'DEFAULT_PERMISSION_CLASSES': (
-				'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-		)
+	'DEFAULT_PERMISSION_CLASSES': (
+		'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+	),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.BasicAuthentication'     
+    ),
 }
 
 # CORS
 CORS_ORIGIN_WHITELIST = (
 		'localhost:8080',
 )
+
+# JSON Web Token Authentication
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=1),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_AUTH_COOKIE': None,
+}
+
+# Password Encryption
+PASSWORD_HASHERS = [
+    'xMCp2.utilities.hashers.PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+];
+
+# Logging Configuration
+LOGGING_CONFIG = None
+LOGLEVEL = os.environ.get('LOGLEVEL','info').upper()
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+         },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'class': 'logging.NullHandler',
+            'level': 'DEBUG'
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'log_file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join('logs', 'django.log'),
+            'maxBytes': 16777216,
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'WARNING',
+            'handlers': ['console']
+        },
+        'xMCp2': {
+            'level': LOGLEVEL,
+            'handlers': ['console','log_file'],
+            'propagate': False
+        }
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO'
+    }
+})

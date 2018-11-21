@@ -61,8 +61,6 @@ export default {
 
       apiService.getProducts().then((page) => {
         this.products = page.data;
-        console.log(page);
-        console.log(page.nextlink);
         this.numberOfProducts = page.count;
         this.numberOfPages = page.numpages;
         this.nextPageURL = page.nextlink;

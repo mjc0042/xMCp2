@@ -8,14 +8,49 @@ export class APIService {
 	/**
 	 * Constructor
 	 */
-    constructor() { }
+    constructor() { };
+    
+    /**
+     * API CALL: Create/Register user
+     */
+    createUser() {
+        const url = `${API_URL}/api/create/user`;
+        return axios.get(url, {
+        	headers: {
+        	    Authorization: `Bearer $AuthService.getAuthToken()}`,
+        	    'X-CSRFToken': `${AuthService.getAuthToken()}`
+        	}}).then(response => response.data);
+    };
+
+    /**
+     * API CALL: Login user
+     * 
+     * @param username
+     * @param password
+     */
+    loginUser(username, password) {
+        const url = `${API_URL}/api/login/user/${username}/${password}`;
+        return axios.get(url, {
+        	headers: {
+        	    Authorization: `Bearer $AuthService.getAuthToken()}`,
+        	    'X-CSRFToken': `${AuthService.getAuthToken()}`
+        	},
+        	auth: {
+        		username: username,
+        		password: password
+        	}}).then(function(response) {
+        	    return {
+        	        data: response.data,
+        	        status: response.statusText
+        	    }; 	
+        	});
+    };
 
     /**
      * API CALL: Get all products
      */
     getProducts() {
         const url = `${API_URL}/api/products/`;
-        console.log('Getting all products', AuthService.getAuthToken());
         return axios.get(url, { 
         	headers: { 
         		Authorization: `Bearer ${AuthService.getAuthToken()}`,

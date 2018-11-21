@@ -9,17 +9,24 @@
 
 <script>
 
+import Vue from 'vue';
+import BootstrapVue from 'bootstrap-vue';
+
 // Import all css dependencies
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.css";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 //import "./css/main.css";
 import "./css/products.css";
 
 //Import all js dependencies
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js";
+import "../node_modules/bootstrap-vue/dist/bootstrap-vue.min.js";
 
 import Navbar from './navbar.vue';
 import AuthService from './js/auth/AuthService';
+
+Vue.use(BootstrapVue);
 
 const auth = new AuthService()
 

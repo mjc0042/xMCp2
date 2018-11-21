@@ -16,13 +16,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
-from catalog import views
+from catalog.views import CatalogView
+from member.views import MemberView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/products/', views.product_list),
-    path('api/products/(<pk>[0-9]+)', views.product_detail),
+    #path('auth/obtain_token/', obtain_jwt_token),
+    #path('auth/refresh_token/', refresh_jwt_token),
+    #path('auth/verify_token/', verify_jwt_token),
+    path('api/create/user', MemberView.create_member),
+    path('api/login/user/<str:username>/<str:password>', MemberView.login),
+    path('api/member/(<member_id>[0-9]+', MemberView.get_member),
+    path('api/products/', CatalogView.product_list),
+    path('api/products/(<pk>[0-9]+)', CatalogView.product_detail),
     #path('api/', include(router.urls)),
     #path('member', TemplateView.as_view(template_name='index.html')),
 ]

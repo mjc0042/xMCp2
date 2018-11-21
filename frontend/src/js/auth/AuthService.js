@@ -18,13 +18,14 @@ export default class AuthService {
   auth0 = new auth0.WebAuth({
     domain: 'xmcp2.auth0.com',
     clientID: 'DwlC4FKS4wteOZK4omDJlI1C85SBo6',
-    redirectUri: 'localhost:8080/',
+    redirectUri: 'localhost:8080/callback',
     //audience: 'localhost:8080',
     responseType: 'token id_token',
     scope: 'openid profile'
   });
 
   login () {
+	  console.log('Attempted logon.');
       this.auth0.authorize();
   };
 
